@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Meson: Configure",
+            "type": "shell",
+            "command": "meson setup build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Configure the project with Meson"
+        },
+        {
+            "label": "Meson: Build",
+            "type": "shell",
+            "command": "meson compile -C build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": "Meson: Configure",
+            "problemMatcher": ["$gcc"],
+            "detail": "Build the project with Meson"
+        },
+        {
+            "label": "Meson: Clean",
+            "type": "shell",
+            "command": "meson compile -C build --clean",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Clean the project with Meson"
+        }
+    ]
+}
