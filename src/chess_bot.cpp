@@ -1,109 +1,128 @@
 #include "../inc/chess_bot.hpp"
 
 #include <stdio.h>
+#include <cstdio>
 
 // #define STEPS_PER_REVOLUTION 800
 // #define MM_PER_REVOLUTION 39?
 // #define STEPS_PER_MM 800/39
 
 ChessBot::ChessBot() {
-  char buffer[1024];
-  serial_port.read(buffer, sizeof(buffer) - 1);
-  std::cout << buffer << std::endl;
-  // apply_grbl_settings();
-  this->serial_port.write("$X\n");
-  this->serial_port.write("$3=1\n"); //(dir port invert mask:00000000) // 0bZYX
-  this->serial_port.write("$25=3000.000\n"); //(homing seek, mm/min)
-  this->serial_port.write("$100=20.000\n"); //(x, step/mm)
-  this->serial_port.write("$101=20.000\n"); //(y, step/mm)
-  this->serial_port.write("$102=20.000\n"); //(z, step/mm)
-  this->serial_port.write("$130=300.000\n"); //(x max travel, mm)
-  this->serial_port.write("$131=300.000\n"); //(y max travel, mm)
-  this->serial_port.write("$132=300.000\n"); //(z max travel, mm)
-  home();
+  // char buffer[1024];
+  // serial_port.read(buffer, sizeof(buffer) - 1);
+  // std::cout << buffer << std::endl;
+  // // apply_grbl_settings();
+  // this->serial_port.write("$X\n");
+  // this->serial_port.write("$3=1\n"); //(dir port invert mask:00000000) // 0bZYX
+  // this->serial_port.write("$25=3000.000\n"); //(homing seek, mm/min)
+  // this->serial_port.write("$100=20.000\n"); //(x, step/mm)
+  // this->serial_port.write("$101=20.000\n"); //(y, step/mm)
+  // this->serial_port.write("$102=20.000\n"); //(z, step/mm)
+  // this->serial_port.write("$130=300.000\n"); //(x max travel, mm)
+  // this->serial_port.write("$131=300.000\n"); //(y max travel, mm)
+  // this->serial_port.write("$132=300.000\n"); //(z max travel, mm)
+  // home();
 }
 
 ChessBot::~ChessBot() {
   return;
 }
 
-int ChessBot::apply_grbl_settings() {
-  this->serial_port.write("$0=10\n"); //(step pulse, usec)
-  this->serial_port.write("$1=25\n"); //(step idle delay, msec)
-  this->serial_port.write("$2=0\n"); //(step port invert mask:00000000)
-  this->serial_port.write("$3=1\n"); //(dir port invert mask:00000000) // 0bZYX
-  this->serial_port.write("$4=0\n"); //(step enable invert, bool)
-  this->serial_port.write("$5=0\n"); //(limit pins invert, bool)
-  this->serial_port.write("$6=0\n"); //(probe pin invert, bool)
-  this->serial_port.write("$10=3\n"); //(status report mask:00000011)
-  this->serial_port.write("$11=0.010\n"); //(junction deviation, mm)
-  this->serial_port.write("$12=0.002\n"); //(arc tolerance, mm)
-  this->serial_port.write("$13=0\n"); //(report inches, bool)
-  this->serial_port.write("$20=0\n"); //(soft limits, bool)
-  this->serial_port.write("$21=1\n"); //(hard limits, bool)
-  this->serial_port.write("$22=1\n"); //(homing cycle, bool)
-  this->serial_port.write("$23=7\n"); //(homing dir invert mask:00000111)
-  this->serial_port.write("$24=250.000\n"); //(homing feed, mm/min)
-  this->serial_port.write("$25=3000.000\n"); //(homing seek, mm/min)
-  this->serial_port.write("$26=250\n"); //(homing debounce, msec)
-  this->serial_port.write("$27=1.000\n"); //(homing pull-off, mm)
-  this->serial_port.write("$100=20.000\n"); //(x, step/mm)
-  this->serial_port.write("$101=20.000\n"); //(y, step/mm)
-  this->serial_port.write("$102=20.000\n"); //(z, step/mm)
-  this->serial_port.write("$110=100000.000\n"); //(x max rate, mm/min)
-  this->serial_port.write("$111=100000.000\n"); //(y max rate, mm/min)
-  this->serial_port.write("$112=100000.000\n"); //(z max rate, mm/min)
-  this->serial_port.write("$120=300.000\n"); //(x accel, mm/sec^2)
-  this->serial_port.write("$121=300.000\n"); //(y accel, mm/sec^2)
-  this->serial_port.write("$122=300.000\n"); //(z accel, mm/sec^2)
-  this->serial_port.write("$130=300.000\n"); //(x max travel, mm)
-  this->serial_port.write("$131=300.000\n"); //(y max travel, mm)
-  this->serial_port.write("$132=300.000\n"); //(z max travel, mm)
-}
+// int ChessBot::apply_grbl_settings() {
+//   this->serial_port.write("$0=10\n"); //(step pulse, usec)
+//   this->serial_port.write("$1=25\n"); //(step idle delay, msec)
+//   this->serial_port.write("$2=0\n"); //(step port invert mask:00000000)
+//   this->serial_port.write("$3=1\n"); //(dir port invert mask:00000000) // 0bZYX
+//   this->serial_port.write("$4=0\n"); //(step enable invert, bool)
+//   this->serial_port.write("$5=0\n"); //(limit pins invert, bool)
+//   this->serial_port.write("$6=0\n"); //(probe pin invert, bool)
+//   this->serial_port.write("$10=3\n"); //(status report mask:00000011)
+//   this->serial_port.write("$11=0.010\n"); //(junction deviation, mm)
+//   this->serial_port.write("$12=0.002\n"); //(arc tolerance, mm)
+//   this->serial_port.write("$13=0\n"); //(report inches, bool)
+//   this->serial_port.write("$20=0\n"); //(soft limits, bool)
+//   this->serial_port.write("$21=1\n"); //(hard limits, bool)
+//   this->serial_port.write("$22=1\n"); //(homing cycle, bool)
+//   this->serial_port.write("$23=7\n"); //(homing dir invert mask:00000111)
+//   this->serial_port.write("$24=250.000\n"); //(homing feed, mm/min)
+//   this->serial_port.write("$25=3000.000\n"); //(homing seek, mm/min)
+//   this->serial_port.write("$26=250\n"); //(homing debounce, msec)
+//   this->serial_port.write("$27=1.000\n"); //(homing pull-off, mm)
+//   this->serial_port.write("$100=20.000\n"); //(x, step/mm)
+//   this->serial_port.write("$101=20.000\n"); //(y, step/mm)
+//   this->serial_port.write("$102=20.000\n"); //(z, step/mm)
+//   this->serial_port.write("$110=100000.000\n"); //(x max rate, mm/min)
+//   this->serial_port.write("$111=100000.000\n"); //(y max rate, mm/min)
+//   this->serial_port.write("$112=100000.000\n"); //(z max rate, mm/min)
+//   this->serial_port.write("$120=300.000\n"); //(x accel, mm/sec^2)
+//   this->serial_port.write("$121=300.000\n"); //(y accel, mm/sec^2)
+//   this->serial_port.write("$122=300.000\n"); //(z accel, mm/sec^2)
+//   this->serial_port.write("$130=300.000\n"); //(x max travel, mm)
+//   this->serial_port.write("$131=300.000\n"); //(y max travel, mm)
+//   this->serial_port.write("$132=300.000\n"); //(z max travel, mm)
+// }
 
-int ChessBot::home() {
-  char cmd[50];
+// int ChessBot::home() {
+//   char cmd[50];
 
-  this->serial_port.write("$X\n"); // Unlock
-  this->serial_port.write("$H\n"); // Home
-  this->serial_port.write("G91\n");
-  sprintf(cmd, "G1 X%d Y%d Z0 F%d\n", this->origin_offset[0], this->origin_offset[1], 3000);
-  this->serial_port.write(cmd);
-  this->serial_port.write("G92 X0 Y0 Z0\n"); // Set home position to 0,0,0
-  this->serial_port.write("G90\n"); // Use absolute position mode
-  this->jiggle();
-  return SUCCESS;
-}
+//   this->serial_port.write("$X\n"); // Unlock
+//   this->serial_port.write("$H\n"); // Home
+//   this->serial_port.write("G91\n");
+//   sprintf(cmd, "G1 X%d Y%d Z0 F%d\n", this->origin_offset[0], this->origin_offset[1], 3000);
+//   this->serial_port.write(cmd);
+//   this->serial_port.write("G92 X0 Y0 Z0\n"); // Set home position to 0,0,0
+//   this->serial_port.write("G90\n"); // Use absolute position mode
+//   this->jiggle();
+//   return SUCCESS;
+// }
 
-int ChessBot::jiggle() {
-  this->serial_port.write("G91\n");
-  this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
-  this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
-  this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
-  this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
-  this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
-  this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
-  this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
-  this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
-  this->serial_port.write( "G1 X0 Y0 Z0 F50000\n");
-  this->serial_port.write("G90\n"); // Use absolute position mode
-  return SUCCESS;
-}
+// int ChessBot::jiggle() {
+//   this->serial_port.write("G91\n");
+//   this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X-3 Y0 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y-3 Z0 F50000\n");
+//   this->serial_port.write( "G1 X0 Y0 Z0 F50000\n");
+//   this->serial_port.write("G90\n"); // Use absolute position mode
+//   return SUCCESS;
+// }
 
-int ChessBot::move() {
-  return SUCCESS;
-}
+// int ChessBot::move() {
+//   return SUCCESS;
+// }
 
 int ChessBot::print_board() {
-  std::cout << this->board << std::endl;
+  // std::cout << this->board << std::endl;
+  int row = 8;
+  std::cout << "+-------------------------------------------+" << std::endl;
+  std::cout << "|       a   b   c   d   e   f   g   h       |" << std::endl;
+  std::cout << "|       v   v   v   v   v   v   v   v       |" << std::endl;
+  std::cout << "|                                           |" << std::endl;
+  for (int i = 63; i >= 0; i -= 8) {
+     std::cout << "| " << row << " >   ";
+      for (int j = 7; j >= 0; j--) {
+        std::cout << ((j == 7) ? "" : " | ") << std::string(this->board.at(chess::Square(i - j)));
+      }
+      std::cout << "   < " << row << " |" << std::endl;
+      row--;
+  }
+  std::cout << "|                                           |" << std::endl;
+  std::cout << "|       ^   ^   ^   ^   ^   ^   ^   ^       |" << std::endl;
+  std::cout << "|       a   b   c   d   e   f   g   h       |" << std::endl;
+  std::cout << "+-------------------------------------------+" << std::endl;
+  return 0;
 }
 
 int ChessBot::print_active_player() {
@@ -112,6 +131,7 @@ int ChessBot::print_active_player() {
   } else if (board.sideToMove() == chess::Color::BLACK) {
     std::cout << "PLAYER: GREY" << std::endl;
   } 
+  return 0;
 }
 
 int ChessBot::print_playable_moves() {
@@ -122,27 +142,28 @@ int ChessBot::print_playable_moves() {
       std::cout << " " << chess::uci::moveToUci(move);
   }
   std::cout << "]" << std::endl;
+  return 0;
 }
 
-int ChessBot::loop_manual_gcode() {
-  char buffer[1024];
-  int done = 0;
-  while (done == 0) {
-    this->serial_port.read(buffer, sizeof(buffer) - 1);
-    printf("Received: %s\r\n", buffer);
+// int ChessBot::loop_manual_gcode() {
+//   char buffer[1024];
+//   int done = 0;
+//   while (done == 0) {
+//     this->serial_port.read(buffer, sizeof(buffer) - 1);
+//     printf("Received: %s\r\n", buffer);
 
-    printf("Send: ");
-    char str[128];
-    fgets(str, 128, stdin);
-    if (str[0] == 'q') { 
-      done = 1;
-      break;
-    }
-    this->serial_port.write(str);
-    this->jiggle();
-  }
-  return SUCCESS;
-}
+//     printf("Send: ");
+//     char str[128];
+//     fgets(str, 128, stdin);
+//     if (str[0] == 'q') { 
+//       done = 1;
+//       break;
+//     }
+//     this->serial_port.write(str);
+//     this->jiggle();
+//   }
+//   return SUCCESS;
+// }
 
 int ChessBot::loop_digital_chess_game(){
   chess::Movelist moves;
